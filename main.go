@@ -93,7 +93,7 @@ func buildCookieString(cookie *http.Cookie) string {
 type info struct {
 	term           int
 	campus         string
-	courseNumber   int
+	courseNumber   string
 	lastName       string
 	fullName       string
 	courseFullName string
@@ -116,7 +116,7 @@ func sendRequest(action string, info info, cookie basicInfo, client *http.Client
 	case "DERIVED_CLSRCH_SSR_EXPAND_COLLAPS$149$$2":
 		data.Set("CLASS_SRCH_WRK2_STRM$35$", strconv.Itoa(info.term))
 		data.Set("SSR_CLSRCH_WRK_CAMPUS$0", info.campus)
-		data.Set("SSR_CLSRCH_WRK_CATALOG_NBR$2", strconv.Itoa(info.courseNumber))
+		data.Set("SSR_CLSRCH_WRK_CATALOG_NBR$2", info.courseNumber)
 		data.Set("SSR_CLSRCH_WRK_SSR_OPEN_ONLY$chk$4", "N")
 	}
 
@@ -246,7 +246,7 @@ type Instructor struct {
 	} `json:"fields"`
 }
 
-func getDepartment(chosen string, term int, campus string, courseNumber int) {
+func getDepartment(chosen string, term int, campus string, courseNumber string) {
 	jsonFile, err := os.Open("instructors.json")
 	if err != nil {
 		fmt.Println(err)
@@ -270,12 +270,12 @@ func getDepartment(chosen string, term int, campus string, courseNumber int) {
 	for _, instructor := range instructors {
 		for _, dept := range instructor.Fields.Department {
 			if dept == chosen {
-				go updateSameSubject(info{lastName: instructor.Fields.LastName, term: term, campus: campus, courseNumber: courseNumber, fullName: instructor.Fields.FirstName + " " + instructor.Fields.LastName, courseFullName: chosen + " " + strconv.Itoa(courseNumber), department: chosen}, getBasicInfo(client), client)
+				go updateSameSubject(info{lastName: instructor.Fields.LastName, term: term, campus: campus, courseNumber: courseNumber, fullName: instructor.Fields.FirstName + " " + instructor.Fields.LastName, courseFullName: chosen + " " + courseNumber, department: chosen}, getBasicInfo(client), client)
 			}
 		}
 	}
 }
 func main() {
-	getDepartment("CSE", 1242, "COL", 3541)
+	getDepartment("CSE", 1248, "COL", "1224")
 	//updateSameSubject(info{lastName: "JONES", term: 1242, campus: "COL", courseNumber: 2421, fullName: "Janis Jones"}, getBasicInfo())
 }
