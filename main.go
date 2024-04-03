@@ -276,6 +276,6 @@ func getDepartment(chosen string, term int, campus string, courseNumber string) 
 	}
 }
 func main() {
-	getDepartment("CSE", 1248, "COL", "1224")
+	getDepartment("CSE", 1248, "COL", "2421")
 	//updateSameSubject(info{lastName: "JONES", term: 1242, campus: "COL", courseNumber: 2421, fullName: "Janis Jones"}, getBasicInfo())
 }
