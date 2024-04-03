@@ -29,7 +29,7 @@ var conn *pgx.Conn
 
 func init() {
 
-	databaseUrl := "postgres://postgres:9a-W76X2sTt@JqM4rPu*@localhost:5432/postgres"
+	databaseUrl := "postgres://localhost:5432/postgres"
 	rdb = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "",
